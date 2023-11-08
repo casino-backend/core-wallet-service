@@ -1,57 +1,46 @@
 package com.core.walletservice.controllers;
 
 import com.core.walletservice.dto.TransactionRequest;
-import com.core.walletservice.exceptions.AppException;
-import com.core.walletservice.responses.StandardResponse;
-import com.core.walletservice.usecases.TransactionInputPort;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.core.walletservice.dto.TransactionResponse;
+import com.core.walletservice.exceptions.BadRequestException;
+import com.core.walletservice.exceptions.InternalErrorException;
+import com.core.walletservice.services.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping("/api/transactions")
 public class TransactionController {
 
-    private final TransactionInputPort transactionInteractor;
+    private final TransactionService transactionService;
 
-    @Autowired
-    public TransactionController(TransactionInputPort transactionInteractor) {
-        this.transactionInteractor = transactionInteractor;
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> deposit(@RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<TransactionResponse> deposit(@RequestBody TransactionRequest transactionRequest) {
         try {
-            Object response = transactionInteractor.deposit(transactionRequest);
-            return ResponseEntity.ok(new StandardResponse(response, "Success"));
-        } catch (AppException e) {
-            // Custom exception handling
-            return ResponseEntity
-                    .status(e.getHttpStatus())
-                    .body(new StandardResponse(null, e.getMessage()));
+            TransactionResponse response = transactionService.deposit(transactionRequest);
+            return ResponseEntity.ok(response);
+        } catch (BadRequestException e) {
+            // This assumes you have a global exception handler to handle BadRequestException
+            throw e;
         } catch (Exception e) {
-            // Generic exception handling
-            return ResponseEntity
-                    .internalServerError()
-                    .body(new StandardResponse(null, "An unexpected error occurred"));
+            // This assumes you have a global exception handler to handle InternalErrorException
+            throw new InternalErrorException("Unexpected error occurred", e);
         }
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> withdraw(@RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<TransactionResponse> withdraw(@RequestBody TransactionRequest transactionRequest) {
         try {
-            Object response = transactionInteractor.withdraw(transactionRequest);
-            return ResponseEntity.ok(new StandardResponse(response, "Success"));
-        } catch (AppException e) {
-            // Custom exception handling
-            return ResponseEntity
-                    .status(e.getHttpStatus())
-                    .body(new StandardResponse(null, e.getMessage()));
+            TransactionResponse response = transactionService.withdraw(transactionRequest);
+            return ResponseEntity.ok(response);
+        } catch (BadRequestException e) {
+            throw e;
         } catch (Exception e) {
-            // Generic exception handling
-            return ResponseEntity
-                    .internalServerError()
-                    .body(new StandardResponse(null, "An unexpected error occurred"));
+            throw new InternalErrorException("Unexpected error occurred", e);
         }
     }
 }

@@ -1,45 +1,96 @@
 package com.core.walletservice.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.UUID;
 
-import java.time.LocalDateTime;
-
-@Document(collection = "wallets")
 public class Wallet {
 
-    @Id
-    private String id; // MongoDB uses String type for ObjectID
-
-    @Field("token")
-    private String token;
-
-    @Field("username")
+    private UUID id; // Assuming the ID is of type UUID for database identity
     private String username;
+    private double balance;
+    private String type; // e.g., "personal", "business"
+    private String upline; // Reference to the entity that introduced the user
+    private String refSale; // Reference to the sales entity or code
 
-    @Field("balance")
-    private double balance; // Using double for floating point numbers
+    // Add other fields that are relevant to your application
 
-    @Field("type")
-    private UserType type;
+    // Constructors
+    public Wallet() {
+        this.id = UUID.randomUUID(); // Automatically generate ID
+    }
 
-    @Field("refSale")
-    private String refSale;
+    public Wallet(String username, double balance, String type, String upline, String refSale) {
+        this.id = UUID.randomUUID();
+        this.username = username;
+        this.balance = balance;
+        this.type = type;
+        this.upline = upline;
+        this.refSale = refSale;
+    }
 
-    @Field("upline")
-    private String upline;
+    // Getters and setters for all fields
 
-    @Field("createdAt")
-    private LocalDateTime createdAt;
+    public UUID getId() {
+        return id;
+    }
 
-    @Field("updatedAt")
-    private LocalDateTime updatedAt;
+    public String getUsername() {
+        return username;
+    }
 
-    // Constructors, getters, setters, and other methods omitted for brevity
-}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-enum UserType {
-    // Assuming you have predefined user types, they will be defined here
-    ADMIN, USER, GUEST;
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double newBalance) {
+        this.balance = newBalance;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUpline() {
+        return upline;
+    }
+
+    public void setUpline(String upline) {
+        this.upline = upline;
+    }
+
+    public String getRefSale() {
+        return refSale;
+    }
+
+    public void setRefSale(String refSale) {
+        this.refSale = refSale;
+    }
+
+    // Other methods, such as for depositing or withdrawing money, may also be included
+
+    // Example toString() method
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", balance=" + balance +
+                ", type='" + type + '\'' +
+                ", upline='" + upline + '\'' +
+                ", refSale='" + refSale + '\'' +
+                // Include other fields in the string representation
+                '}';
+    }
+
+    public void setToken(String token) {
+    }
+
+    // hashCode, equals, and other utility methods if needed
 }

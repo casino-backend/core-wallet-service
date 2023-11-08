@@ -1,14 +1,22 @@
 package com.core.walletservice.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class GetWalletRequest {
+
+    @NotBlank(message = "Username is required")
     private String username;
 
-    // Constructor
+    // Constructors
+    public GetWalletRequest() {
+        // No-args constructor
+    }
+
     public GetWalletRequest(String username) {
         this.username = username;
     }
 
-    // Getter and Setter
+    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -16,7 +24,12 @@ public class GetWalletRequest {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    // toString method for debugging
+    @Override
+    public String toString() {
+        return "GetWalletRequest{" +
+                "username='" + username + '\'' +
+                '}';
+    }
 }
-
-// Existing CreateWalletRequest, CreateWalletResponse, and UpdateWalletRequest classes remain unchanged
-

@@ -3,42 +3,63 @@ package com.core.walletservice.usecases;
 import com.core.walletservice.dto.CreateWalletRequest;
 import com.core.walletservice.dto.GetWalletRequest;
 import com.core.walletservice.dto.UpdateWalletRequest;
-import com.core.walletservice.entity.Wallet;
-import com.core.walletservice.exceptions.AppException;
+import com.core.walletservice.exceptions.EntityNotFoundException;
+import com.core.walletservice.exceptions.NotFoundException;
 import com.core.walletservice.repositories.WalletRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.core.walletservice.entity.Wallet;
 
-@Service
 public class WalletInteractor implements WalletInputPort {
 
-    private final WalletRepository walletRepository;
+    private final WalletRepository walletRepo;
 
-    @Autowired
-    public WalletInteractor(WalletRepository walletRepository) {
-        this.walletRepository = walletRepository;
+    public WalletInteractor(WalletRepository walletRepo) {
+        this.walletRepo = walletRepo;
     }
 
     @Override
-    public Wallet createWallet(CreateWalletRequest walletRequest) throws AppException {
-        // Here you would contain your logic to create a wallet
-        // using the walletRepository and then return the created Wallet entity
+    public Wallet createWallet(CreateWalletRequest walletRequest) throws Exception {
+        Wallet newWallet = new Wallet();
+        newWallet.setToken(walletRequest.getToken());
+        newWallet.setUsername(walletRequest.getUsername());
+        newWallet.setBalance(walletRequest.getBalance());
+        newWallet.setType(walletRequest.getType()); // Ensure that the UserType is correctly handled in Java
+        newWallet.setUpline(walletRequest.getUpline());
+        newWallet.setRefSale(walletRequest.getRefSale());
+
+        Wallet savedWallet = walletRepo.createWallet(newWallet);
+        if (savedWallet == null) {
+            throw new NotFoundException("Failed to create wallet");
+        }
+        return savedWallet;
     }
 
     @Override
-    public Wallet getBalance(GetWalletRequest walletRequest) throws AppException {
-        return getWallet(walletRequest); // Assuming this is the desired behavior
+    public double getBalance(GetWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException {
+        Wallet foundWallet = walletRepo.findByUsername(walletRequest.getUsername());
+        if (foundWallet == null) {
+            throw new NotFoundException("Wallet not found");
+        }
+        return foundWallet.getBalance();
     }
 
     @Override
-    public Wallet getWallet(GetWalletRequest walletRequest) throws AppException {
-        // Here you would contain your logic to get a wallet
-        // using the walletRepository and then return the Wallet entity
+    public Wallet getWallet(GetWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException {
+        Wallet foundWallet = walletRepo.findByUsername(walletRequest.getUsername());
+        if (foundWallet == null) {
+            throw new NotFoundException("Wallet not found");
+        }
+        return foundWallet;
     }
 
     @Override
-    public Wallet updateWallet(UpdateWalletRequest walletRequest) throws AppException {
-        // Here you would contain your logic to update a wallet
-        // using the walletRepository and then return the updated Wallet entity
+    public Wallet updateWallet(UpdateWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException {
+        Wallet updatedWallet = walletRepo.findByUsernameAndUpdate(
+                walletRequest.getUsername(),
+                walletRequest.getAmountAfter()
+        );
+        if (updatedWallet == null) {
+            throw new NotFoundException("Wallet not found");
+        }
+        return updatedWallet;
     }
 }

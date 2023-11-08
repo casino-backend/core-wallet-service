@@ -1,21 +1,28 @@
 package com.core.walletservice.dto;
 
 public class WalletResponse {
+
     private String errorCode;
     private String message;
-    private double balance;
+    private String username;
+    private Double balance;
 
     // Constructors
     public WalletResponse() {
+        // Default constructor
     }
 
-    public WalletResponse(String errorCode, String message, double balance) {
+    public WalletResponse(String errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
+    }
+
+    public WalletResponse(String username, Double balance) {
+        this.username = username;
         this.balance = balance;
     }
 
-    // Getters and Setters
+    // Getters and setters for errorCode and message
     public String getErrorCode() {
         return errorCode;
     }
@@ -32,15 +39,31 @@ public class WalletResponse {
         this.message = message;
     }
 
-    public double getBalance() {
+    // Getters and setters for username and balance
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
-    public double getBalance(String walletId) {
-        return 0.0;
+    // toString method
+    @Override
+    public String toString() {
+        return "WalletResponse{" +
+                "errorCode='" + errorCode + '\'' +
+                ", message='" + message + '\'' +
+                ", username='" + username + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }

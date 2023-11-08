@@ -1,14 +1,12 @@
 package com.core.walletservice;
 
+import com.core.walletservice.controllers.TransactionController;
+import com.core.walletservice.controllers.WalletController;
+import com.core.walletservice.services.TransactionService;
+import com.core.walletservice.services.WalletService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.core.walletservice.controllers.WalletController;
-import com.core.walletservice.controllers.TransactionController;
-import com.core.walletservice.services.WalletService;
-import com.core.walletservice.services.TransactionService;
-import com.core.walletservice.config.KafkaProducerConfig;
-import com.core.walletservice.config.MongoDBConfig;
 // other imports...
 
 @SpringBootApplication
@@ -25,8 +23,8 @@ public class WalletServiceApplication {
 
 	@Bean
 	public TransactionController transactionController(TransactionService transactionService) {
-		return new TransactionController(transactionService);
+		TransactionService TransactionService = null;
+		return new TransactionController(TransactionService);
 	}
 
-	// Define other beans and configurations as needed
 }

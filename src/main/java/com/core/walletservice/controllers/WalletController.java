@@ -1,8 +1,8 @@
 package com.core.walletservice.controllers;
 
-import com.core.walletservice.exceptions.AppException;
 import com.core.walletservice.dto.GetWalletRequest;
 import com.core.walletservice.dto.WalletResponse;
+import com.core.walletservice.exceptions.AppException;
 import com.core.walletservice.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
