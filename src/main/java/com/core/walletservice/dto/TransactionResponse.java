@@ -9,6 +9,9 @@ public class TransactionResponse {
     private Double walletAmountAfter;
     private String txId;
 
+    public TransactionResponse(String username, Double amount, double v, double balance, String id) {
+    }
+
     // Getters and setters
     public String getToken() {
         return token;

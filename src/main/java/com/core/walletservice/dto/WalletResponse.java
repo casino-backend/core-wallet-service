@@ -1,5 +1,7 @@
 package com.core.walletservice.dto;
 
+import com.core.walletservice.entity.Wallet;
+
 public class WalletResponse {
 
     private String errorCode;
@@ -55,6 +57,9 @@ public class WalletResponse {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+    public Wallet toWallet() {
+        return toWallet();
+    }
 
     // toString method
     @Override
@@ -66,4 +71,6 @@ public class WalletResponse {
                 ", balance=" + balance +
                 '}';
     }
+
+
 }
