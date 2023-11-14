@@ -2,16 +2,12 @@ package com.core.walletservice.repositories;
 
 import com.core.walletservice.entity.Wallet;
 import com.core.walletservice.exceptions.EntityNotFoundException;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface WalletRepository {
+import java.util.UUID;
 
-    Wallet createWallet(Wallet wallet) throws Exception;
-
-    Wallet saveWallet(Wallet wallet) throws Exception;
+public interface WalletRepository extends MongoRepository<Wallet, UUID>, CustomWalletRepository {
 
     Wallet findByUsername(String username) throws EntityNotFoundException;
 
-    Wallet findByUsernameAndUpdate(String username, double newBalance) throws EntityNotFoundException;
-
-    Wallet save(Wallet wallet);
 }

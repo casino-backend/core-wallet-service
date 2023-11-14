@@ -10,7 +10,10 @@ import com.core.walletservice.exceptions.NotFoundException;
 
 public interface WalletInputPort {
     Wallet createWallet(CreateWalletRequest walletRequest) throws Exception;
+
     double getBalance(GetWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException;
+
     Wallet getWallet(GetWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException;
+
     Wallet updateWallet(UpdateWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException;
 }

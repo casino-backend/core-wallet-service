@@ -3,10 +3,10 @@ package com.core.walletservice.usecases;
 import com.core.walletservice.dto.CreateWalletRequest;
 import com.core.walletservice.dto.GetWalletRequest;
 import com.core.walletservice.dto.UpdateWalletRequest;
+import com.core.walletservice.entity.Wallet;
 import com.core.walletservice.exceptions.EntityNotFoundException;
 import com.core.walletservice.exceptions.NotFoundException;
 import com.core.walletservice.repositories.WalletRepository;
-import com.core.walletservice.entity.Wallet;
 
 public class WalletInteractor implements WalletInputPort {
 
@@ -26,7 +26,7 @@ public class WalletInteractor implements WalletInputPort {
         newWallet.setUpline(walletRequest.getUpline());
         newWallet.setRefSale(walletRequest.getRefSale());
 
-        Wallet savedWallet = walletRepo.createWallet(newWallet);
+        Wallet savedWallet = walletRepo.save(newWallet);
         if (savedWallet == null) {
             throw new NotFoundException("Failed to create wallet");
         }
@@ -53,7 +53,9 @@ public class WalletInteractor implements WalletInputPort {
 
     @Override
     public Wallet updateWallet(UpdateWalletRequest walletRequest) throws EntityNotFoundException, NotFoundException {
-        Wallet updatedWallet = walletRepo.findByUsernameAndUpdate(
+
+
+        Wallet updatedWallet = walletRepo.updateBalanceByUsername(
                 walletRequest.getUsername(),
                 walletRequest.getAmountAfter()
         );

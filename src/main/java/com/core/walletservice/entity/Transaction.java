@@ -1,7 +1,10 @@
 package com.core.walletservice.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
+@Document(collection = "Transaction")
 public class Transaction {
 
     private String id;
