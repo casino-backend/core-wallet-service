@@ -34,45 +34,45 @@ public class CreateWalletRequest {
         return username;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getUpline() {
-        return upline;
-    }
-
-    public String getRefSale() {
-        return refSale;
-    }
-
     // Setters
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public void setToken(String token) {
         this.token = token;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
+    public String getUpline() {
+        return upline;
+    }
+
     public void setUpline(String upline) {
         this.upline = upline;
+    }
+
+    public String getRefSale() {
+        return refSale;
     }
 
     public void setRefSale(String refSale) {

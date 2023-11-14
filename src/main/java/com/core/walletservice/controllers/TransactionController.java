@@ -4,24 +4,27 @@ import com.core.walletservice.dto.TransactionRequest;
 import com.core.walletservice.dto.TransactionResponse;
 import com.core.walletservice.exceptions.BadRequestException;
 import com.core.walletservice.exceptions.InternalErrorException;
-import com.core.walletservice.services.TransactionService;
+import com.core.walletservice.services.impl.TransactionServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/wallet")
 public class TransactionController {
 
-    private final TransactionService transactionService;
+    private final TransactionServiceImpl transactionServiceImpl;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
+    public TransactionController(TransactionServiceImpl transactionServiceImpl) {
+        this.transactionServiceImpl = transactionServiceImpl;
     }
 
     @PostMapping("/deposit")
     public ResponseEntity<TransactionResponse> deposit(@RequestBody TransactionRequest transactionRequest) {
         try {
-            TransactionResponse response = transactionService.deposit(transactionRequest);
+            TransactionResponse response = transactionServiceImpl.deposit(transactionRequest);
             return ResponseEntity.ok(response);
         } catch (BadRequestException e) {
             // This assumes you have a global exception handler to handle BadRequestException
@@ -35,7 +38,7 @@ public class TransactionController {
     @PostMapping("/withdraw")
     public ResponseEntity<TransactionResponse> withdraw(@RequestBody TransactionRequest transactionRequest) {
         try {
-            TransactionResponse response = transactionService.withdraw(transactionRequest);
+            TransactionResponse response = transactionServiceImpl.withdraw(transactionRequest);
             return ResponseEntity.ok(response);
         } catch (BadRequestException e) {
             throw e;

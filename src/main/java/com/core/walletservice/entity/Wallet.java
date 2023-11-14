@@ -1,10 +1,13 @@
 package com.core.walletservice.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.UUID;
 
+@Document(collection = "wallet")
 public class Wallet {
 
-    private UUID id; // Assuming the ID is of type UUID for database identity
+    private final UUID id; // Assuming the ID is of type UUID for database identity
     private String username;
     private double balance;
     private String type; // e.g., "personal", "business"

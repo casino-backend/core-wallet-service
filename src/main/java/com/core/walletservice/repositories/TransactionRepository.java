@@ -1,13 +1,8 @@
 package com.core.walletservice.repositories;
 
 import com.core.walletservice.entity.Transaction;
-import com.core.walletservice.exceptions.EntityNotFoundException;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface TransactionRepository {
+public interface TransactionRepository extends MongoRepository<Transaction, String> {
 
-    Transaction createTransaction(Transaction transaction) throws Exception;
-
-    Transaction findRecentTransaction(String username, String action, double amount) throws EntityNotFoundException;
-
-    void save(Transaction transaction);
 }

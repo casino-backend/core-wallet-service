@@ -1,0 +1,10 @@
+server:
+  port: 8082
+spring:
+  data:
+    mongodb:
+      host: localhost           # MongoDB server hostname or IP address
+      port: 27017               # MongoDB server port
+      database: testDb           # Database name
+      authentication-database: admin   # Authentication database (optional)
+      uri: mongodb://localhost:27017/testDb

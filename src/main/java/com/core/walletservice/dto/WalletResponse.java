@@ -57,6 +57,7 @@ public class WalletResponse {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+
     public Wallet toWallet() {
         return toWallet();
     }
